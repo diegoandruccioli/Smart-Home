@@ -1,0 +1,68 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ambienti Virtuali
+venv/
+.venv/
+
+# Ignora tutti i file di testo (.txt)
+*.txt
+# TRANNE requirements.txt (contiene le librerie da scaricare)
+# TRANNE LibrerieC++.txt (per librerie da Library Manager)
+!requirements.txt
+!LibrerieC++.txt
+
+# Ignora file PDF
+*.pdf
+
+# Ignora file immagini comuni
+*.jpg
+*.jpeg
+*.png
+*.gif
+
+# Ignora file Microsoft Office e similari
+*.doc
+*.docx
+*.xls
+*.xlsx
+*.ppt
+*.pptx
+*.odt
+*.ods
+*.odp
+
+# Ignora file temporanei ed di backup comuni
+*~
+*.bak
+*.swp
+*.tmp
+
+# Ignora file di compilazione C++ e simili
+*.o
+*.obj
+*.exe
+*.out
+*.elf
+
+# Ignora file di Arduino (.ino compilati)
+*.hex
+*.bin
+
+# Ignora file JS di build/transpilation
+*.min.js
+*.map
+
+# Ignora file CSS di build
+*.min.css
+
+# Ignora file Web Open Font Format
+*.woff2
+
+# Ignora cartelle di dipendenze o build comunemente usate nei progetti web
+node_modules/
+dist/
+build/
