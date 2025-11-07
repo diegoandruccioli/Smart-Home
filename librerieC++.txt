@@ -1,0 +1,16 @@
+
+
+Questo file alla fine del progetto dev'essere eliminato e le librerie Arduino/C++ devono essere incluse nel file README.md del progetto git
+
+roomControl/roomActuatorBoard.ino e file collegati:
+- Servo (standard)
+- TimeLib
+- ArduinoJson
+- PubSubClient
+
+roomSensorBoard/sensor-board.ino:
+- WiFi (standard)
+- NTPClient
+- WiFiUdp (standard)
+- Adafruit_MQTT
+- ArduinoJson (per DynamicJsonDocument)
