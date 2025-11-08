@@ -6,13 +6,17 @@ Questo progetto implementa un sistema di **domotica intelligente (Smart Home)** 
 
 Il sistema è suddiviso in moduli distinti che comunicano tramite il protocollo **MQTT** e un bridge **WebSocket** per l'interfaccia utente.
 
+---
+
 ## 👥 2. Partecipanti al Progetto
 
-| Ruolo | Nome Progettista |
-| :--- | :--- |
-| Collaboratore 1 | Andruccioli Diego |
-| Collaboratore 2 | Mici Rei |
-| Collaboratore 3 | Morelli Giovanni |
+| Ruolo | Nome Progettista | Email Progettista |
+| :--- | :--- | :--- |
+| Collaboratore 1 | Andruccioli Diego | diego.andruccioli@studio.unibo.it |
+| Collaboratore 2 | Mici Rei | rei.mici2@studio.unibo.it |
+| Collaboratore 3 | Morelli Giovanni | giovanni.morelli8@studio.unibo.it |
+
+---
 
 ## ⚙️ 3. Componenti e Architettura
 
@@ -34,6 +38,8 @@ Il sistema è basato su un'architettura a tre livelli:
 | **Dashboard** | HTML / JS / Bootstrap | **WebSocket** | Interfaccia utente in tempo reale. |
 | **Data Visualization** | JavaScript | Plotly.js | Rendering di grafici storici. |
 
+---
+
 ## 💡 4. Funzionalità del Progetto
 
 Il sistema supporta due modalità operative principali per ogni attuatore:
@@ -48,7 +54,35 @@ Il sistema supporta due modalità operative principali per ogni attuatore:
 
 **Priorità:** I comandi manuali hanno sempre la priorità sulla logica automatica.
 
-## 📦 5. Setup delle Dipendenze
+---
+
+## 🚦 5. Stato di Implementazione e Priorità delle Funzionalità
+
+Questa tabella riepiloga le funzionalità principali del sistema e lo stato attuale dell'implementazione.
+
+| Nome Funzione | Tipo Modulo | Priorità | Stato di Implementazione |
+| :--- | :--- | :--- | :--- |
+| **Luce: Controllo Manuale (ON/OFF)** | Attuatore / Dashboard | MUST | 🟢 |
+| **Luce: Logica Automatica (PIR)** | Attuatore | SHOULD | 🟠 |
+| **Tapparella: Controllo Manuale (Slider)** | Attuatore / Dashboard | MUST | 🟢 |
+| **Tapparella: Logica Auto (PIR + Orario)** | Attuatore | MUST | 🟢 |
+| **Monitoraggio Movimento (PIR)** | Sensori / Dashboard | MUST | 🟢 |
+| **Monitoraggio Luminosità (LDR)** | Sensori / Dashboard | MUST | 🟢 |
+| **Persistenza Dati Storici (DB)** | Server Bridge | SHOULD | 🟠 |
+| **Server Bridge (MQTT $\leftrightarrow$ WS)** | Server Bridge | MUST | 🟢 |
+
+<aside>
+<img src="/icons/row_gray.svg" alt="/icons/row_gray.svg" width="40px" />
+Legenda:
+
+* **🟢 Completamente Implementato:** Funzione con codice sorgente completo e testato.
+* **🟠 Implementato Parzialmente:** Logica base presente, ma mancano integrazioni o test completi (es. persistenza dati DB non ancora attiva).
+* **🔴 Mancante:** Funzione non ancora sviluppata.
+</aside>
+
+---
+
+## 📦 6. Setup delle Dipendenze
 
 Per avviare il progetto, i collaboratori devono installare le librerie sia per l'ambiente Python (Bridge) sia per i microcontrollori (Arduino/C++).
 
