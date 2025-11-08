@@ -59,7 +59,8 @@ venv/
 # Ignora file CSS di build
 *.min.css
 
-# Ignora file Web Open Font Format
+# Ignora i font web (per evitare grandi file binari)
+*.woff
 *.woff2
 
 # Ignora cartelle di dipendenze o build comunemente usate nei progetti web
