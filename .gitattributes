@@ -1,0 +1,9 @@
+# 1. IMPOSTAZIONE GLOBALE: Imposta l'EOL "auto" per tutti i file di testo.
+# Questo è il cuore della soluzione per l'uniformità.
+* text=auto
+
+# 2. FILE BINARI TRACCIATI: Assicurati che i file binari *che potrebbero essere tracciati* non vengano modificati.
+*.png binary
+*.jpg binary
+*.pdf binary
+*.sh  text eol=lf
