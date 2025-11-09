@@ -75,7 +75,7 @@ def on_message(client, userdata, msg):
     # 2. Qui andrebbe la logica di persistenza nel DB (es. views.persist_data(payload))
 
 # Variabile globale per il client MQTT
-mqtt_client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2)
+mqtt_client = mqtt.Client()
 mqtt_client.on_connect = on_connect
 mqtt_client.on_message = on_message
 

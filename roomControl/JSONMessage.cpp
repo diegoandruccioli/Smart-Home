@@ -1,5 +1,6 @@
+#include "JSONMessage.h"
+#include <ArduinoJson.h> 
 #include <Arduino.h>
-#include <ArduinoJson.h>
 
 // Classe semplice per messaggi JSON
 class Msg {

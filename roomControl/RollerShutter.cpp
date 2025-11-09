@@ -1,6 +1,8 @@
+#include "RollerShutter.h" 
 #include <Arduino.h>
 #include <Servo.h>
 #include <TimeLib.h>  // per gestione ora sistema
+
 
 // Variabili globali / stato 
 Servo servo;          // libreria per 'servomotore' 

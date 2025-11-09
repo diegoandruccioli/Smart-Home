@@ -1,5 +1,5 @@
 //  file principale della board sensori con pubblicazione via MQTT, facilitando riconoscimento e gestione nel progetto
-
+#include <ArduinoJson.h>
 #include <Arduino.h>
 #include <WiFi.h>
 #include <NTPClient.h>
@@ -13,7 +13,7 @@
 
 const char* ssid = "asus";
 const char* password = "0123456789";
-const char* mqtt_server = "192.168.2.2";
+const char* mqtt_server = "192.168.1.42";
 const int mqtt_port = 1883;
 const char* topic_light = "esp/light";
 const char* topic_motion = "esp/motion";
@@ -34,8 +34,7 @@ NTPClient timeClient(ntpUDP, "pool.ntp.org", 7200);
 // JSON helper - builds JSON string with name, measure and timestamp
 String getJson(const char* name, int measure) {
   timeClient.update();
-  DynamicJsonDocument doc(JSON_OBJECT_SIZE(4));
-  doc["name"] = name;
+  StaticJsonDocument<128> doc; 
   doc["measure"] = measure;
   doc["timestamp"] = timeClient.getEpochTime();
   String json;

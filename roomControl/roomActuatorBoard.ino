@@ -3,14 +3,14 @@
 #include <PubSubClient.h>
 
 // Includi le tue classi di logica
-#include JSONMessage.cpp
-#include Light.cpp
-#include RollerShutter.cpp 
+#include "JSONMessage.h"
+#include "Light.h"
+#include "RollerShutter.h"
 
 // --- Configurazione di Rete ---
 const char* ssid = "asus";                  // Dalla tua sensor-board.ino
 const char* password = "0123456789";        // Dalla tua sensor-board.ino
-const char* mqtt_server = "192.168.2.2";    // Broker MQTT
+const char* mqtt_server = "192.168.1.42";    // Broker MQTT
 const int mqtt_port = 1883;
 
 // --- Configurazione Topic MQTT (Iscrizione) ---

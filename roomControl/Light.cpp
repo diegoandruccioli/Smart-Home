@@ -1,6 +1,7 @@
 // Implementa il semplice controllo di una luce basata su sensore PIR e comando manuale di accensione
-
+#include "Light.h" 
 #include <Arduino.h>
+
 
 // ----- Variabili globali e costanti -----
 const int pinLed = 13;  // pin del led luce
@@ -36,6 +37,7 @@ void printLightState() {
   Serial.println(lightState ? "ON" : "OFF");
 }
 
+/*
 // ----- Setup -----
 void setup() {
   Serial.begin(9600);
@@ -56,3 +58,5 @@ void loop() {
 
   delay(1000);  // delay per simulazione
 }
+
+*/

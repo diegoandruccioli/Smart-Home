@@ -2,7 +2,7 @@
 
 import multiprocessing
 from flask import Flask
-from views import views
+# from views import views
 import os
 
 def start_worker():
