@@ -1,4 +1,3 @@
-//  file principale della board sensori con pubblicazione via MQTT, facilitando riconoscimento e gestione nel progetto
 #include <ArduinoJson.h>
 #include <Arduino.h>
 #include <WiFi.h>

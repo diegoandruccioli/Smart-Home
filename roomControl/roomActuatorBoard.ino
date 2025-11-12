@@ -1,4 +1,3 @@
-/*
 #include <Arduino.h>
 #include <WiFi.h>
 #include <PubSubClient.h>
@@ -7,8 +6,6 @@
 #include "JSONMessage.h"
 #include "Light.h"
 #include "RollerShutter.h"
-
-*/
 
 // --- Configurazione di Rete ---
 const char* ssid = "prova";                  // Dalla tua sensor-board.ino
