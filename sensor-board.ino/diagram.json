@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "author": "Smart Home Sensor Board",
+  "editor": "Wokwi",
+  "parts": [
+    { "type": "wokwi-esp32-devkit-v1", "id": "esp", "top": 0, "left": 0, "attrs": {} },
+    { "type": "wokwi-pir-motion-sensor", "id": "pir", "top": -120.8, "left": 11.82, "attrs": {} },
+    {
+      "type": "wokwi-photoresistor-sensor",
+      "id": "ldr",
+      "top": -25.6,
+      "left": 192.8,
+      "attrs": {}
+    },
+    { "type": "wokwi-led", "id": "led", "top": 15.6, "left": 157.4, "attrs": { "color": "red" } }
+  ],
+  "connections": [
+    [ "esp:TX", "$serial:RX", "", [] ],
+    [ "esp:RX", "$serial:TX", "", [] ],
+    [ "esp:GND", "pir:GND", "black", [ "v0" ] ],
+    [ "esp:3V3", "pir:VCC", "red", [ "v0" ] ],
+    [ "esp:GND", "ldr:GND", "black", [ "v0" ] ],
+    [ "esp:3V3", "ldr:VCC", "red", [ "v0" ] ],
+    [ "esp:GND", "led:C", "black", [ "v0" ] ],
+    [ "esp:D34", "pir:OUT", "green", [ "v0" ] ],
+    [ "esp:D35", "ldr:OUT", "green", [ "v0" ] ],
+    [ "esp:D32", "led:A", "green", [ "v0" ] ]
+  ],
+  "dependencies": {}
+}
