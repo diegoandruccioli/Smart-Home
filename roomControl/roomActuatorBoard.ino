@@ -8,15 +8,13 @@
 #include "RollerShutter.h"
 
 // --- Configurazione di Rete ---
-const char* ssid = "prova";                  // Dalla tua sensor-board.ino
-const char* password = "prova";        // Dalla tua sensor-board.ino
-const char* mqtt_server = "broker.hivemq.com";    // Broker MQTT
-const int mqtt_port = 1883;
-
-// --- Configurazione Topic MQTT (Iscrizione) ---
-// Comandi manuali dalla dashboard (tramite il bridge Python)
+const char* ssid = "Wokwi-GUEST";
+const char* password = "";
+const char* mqtt_server = "6a7c8e41ebb842f4811d5f9e75cdffc4.s1.eu.hivemq.cloud";
+const int mqtt_port = 8883;
 const char* TOPIC_CMD_LIGHT = "cmd/light";  
 const char* TOPIC_CMD_ROLL = "cmd/roll";
+
 // Dati sensori dalla Scheda Sensori (per logica automatica)
 const char* TOPIC_PIR_SENSOR = "esp/motion";
 const char* TOPIC_LIGHT_SENSOR = "esp/light";

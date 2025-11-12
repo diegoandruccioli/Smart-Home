@@ -11,10 +11,10 @@
 #define LED_PIN 32
 
 // --- Configurazione di Rete ---
-const char* ssid = "prova";
-const char* password = "prova";
-const char* mqtt_server = "broker.hivemq.com";
-const int mqtt_port = 1883;
+const char* ssid = "Wokwi-GUEST";
+const char* password = "";
+const char* mqtt_server = "6a7c8e41ebb842f4811d5f9e75cdffc4.s1.eu.hivemq.cloud";
+const int mqtt_port = 8883;
 const char* topic_light = "esp/light";
 const char* topic_motion = "esp/motion";
 
