@@ -56,7 +56,9 @@ async def websocket_handler(websocket, path):
 
 # --- Funzioni MQTT ---
 
-def on_connect(client, userdata, flags, reason_code, properties):
+# AGGIUNGI *args per catturare argomenti non necessari (come 'properties')
+# Questa firma è più robusta con le versioni 1.x e 2.x
+def on_connect(client, userdata, flags, reason_code, *args):
     """Callback chiamata alla connessione MQTT."""
     print("MQTT Connected. Subscribing to sensor topics.")
     for topic in MQTT_TOPIC_SENSORS:

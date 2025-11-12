@@ -1,8 +1,8 @@
 # FILE: server_bridge/variable.py
 
 # --- Database Config (Mantieni i tuoi valori) ---
-DB_URL = "192.168.1.42" 
-DB_NAME = "tuoDB"
+DB_URL = "" 
+DB_NAME = "SmartHome"
 DB_TABLE = "SmartHomeData" 
 
 # --- MQTT Config (Mantieni i tuoi valori) ---
