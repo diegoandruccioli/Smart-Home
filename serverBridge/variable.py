@@ -6,7 +6,7 @@ DB_NAME = "tuoDB"
 DB_TABLE = "SmartHomeData" 
 
 # --- MQTT Config (Mantieni i tuoi valori) ---
-MQTT_URL = "192.168.1.42" # Indirizzo del tuo MQTT Broker (es. Mosquitto)
+MQTT_URL = "broker.hivemq.com" # Indirizzo del MQTT Broker (es. Mosquitto)
 MQTT_PORT = 1883
 
 # TOPIC SENSORS (Pubblicati dalla Scheda Sensori, Sottoscritti qui)
