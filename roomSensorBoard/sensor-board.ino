@@ -11,9 +11,10 @@
 #define PHOTO_RESISTOR_PIN 35
 #define LED_PIN 32
 
-const char* ssid = "asus";
-const char* password = "0123456789";
-const char* mqtt_server = "192.168.1.42";
+// --- Configurazione di Rete ---
+const char* ssid = "prova";
+const char* password = "prova";
+const char* mqtt_server = "broker.hivemq.com";
 const int mqtt_port = 1883;
 const char* topic_light = "esp/light";
 const char* topic_motion = "esp/motion";

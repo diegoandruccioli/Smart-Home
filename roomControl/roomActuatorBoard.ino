@@ -1,3 +1,4 @@
+/*
 #include <Arduino.h>
 #include <WiFi.h>
 #include <PubSubClient.h>
@@ -7,10 +8,12 @@
 #include "Light.h"
 #include "RollerShutter.h"
 
+*/
+
 // --- Configurazione di Rete ---
-const char* ssid = "asus";                  // Dalla tua sensor-board.ino
-const char* password = "0123456789";        // Dalla tua sensor-board.ino
-const char* mqtt_server = "192.168.1.42";    // Broker MQTT
+const char* ssid = "prova";                  // Dalla tua sensor-board.ino
+const char* password = "prova";        // Dalla tua sensor-board.ino
+const char* mqtt_server = "broker.hivemq.com";    // Broker MQTT
 const int mqtt_port = 1883;
 
 // --- Configurazione Topic MQTT (Iscrizione) ---
@@ -200,5 +203,3 @@ void mqttCallback(char* topic, byte* payload, unsigned int length) {
     // La logica di updateLight viene eseguita nel loop() in base a manualLightState e pirStateLocal
   }
 }
-
-// Fine del file roomActuatorBoard.ino
