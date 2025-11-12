@@ -13,7 +13,7 @@
 
 const char* ssid = "asus";
 const char* password = "0123456789";
-const char* mqtt_server = "192.168.1.42";
+const char* mqtt_server = "172.20.10.8";
 const int mqtt_port = 1883;
 const char* topic_light = "esp/light";
 const char* topic_motion = "esp/motion";

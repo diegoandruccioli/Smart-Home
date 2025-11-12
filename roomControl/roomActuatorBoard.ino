@@ -10,7 +10,7 @@
 // --- Configurazione di Rete ---
 const char* ssid = "asus";                  // Dalla tua sensor-board.ino
 const char* password = "0123456789";        // Dalla tua sensor-board.ino
-const char* mqtt_server = "192.168.1.42";    // Broker MQTT
+const char* mqtt_server = "172.20.10.8";    // Broker MQTT
 const int mqtt_port = 1883;
 
 // --- Configurazione Topic MQTT (Iscrizione) ---

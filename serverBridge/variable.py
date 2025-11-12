@@ -1,12 +1,12 @@
 # FILE: server_bridge/variable.py
 
 # --- Database Config (Mantieni i tuoi valori) ---
-DB_URL = "192.168.1.42" 
+DB_URL = "172.20.10.8" 
 DB_NAME = "tuoDB"
 DB_TABLE = "SmartHomeData" 
 
 # --- MQTT Config (Mantieni i tuoi valori) ---
-MQTT_URL = "192.168.1.42" # Indirizzo del tuo MQTT Broker (es. Mosquitto)
+MQTT_URL = "172.20.10.8" # Indirizzo del tuo MQTT Broker (es. Mosquitto)
 MQTT_PORT = 1883
 
 # TOPIC SENSORS (Pubblicati dalla Scheda Sensori, Sottoscritti qui)
