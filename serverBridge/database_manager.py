@@ -50,38 +50,56 @@ def log_data(timestamp, name, measure):
 
 # Funzione per aggregare i dati per i grafici
 # Questo replica la logica di aggregazione oraria vista in charts.js
+# FILE: serverBridge/database_manager.py
+# ... (le altre funzioni init_db, log_data, etc. restano invariate) ...
+
 def get_aggregated_chart_data(sensor_name):
     """
     Estrae e aggrega i dati per i grafici.
-    Calcola la percentuale di tempo "ON" (measure=1) per ogni ora.
+    Per 'light', calcola la % di tempo "ON" (media di 0 e 1 * 100).
+    Per 'roll', calcola la media della posizione (0-100).
     """
     conn = get_db_connection()
     cursor = conn.cursor()
 
-    # I dati dai sensori arrivano ogni secondo.
-    # Contiamo i secondi in cui 'measure' era 1 e raggruppiamo per ora.
-    query = """
+    # Query universale
+    query_template = """
     SELECT 
         strftime('%Y-%m-%d %H:00', timestamp, 'unixepoch') as hour_bucket,
-        (COUNT(*) * 100.0 / 3600.0) as on_percentage
+        {aggregation} as value
     FROM 
         sensor_data
     WHERE 
-        name = ? AND measure = 1
+        name = ?
     GROUP BY 
         hour_bucket
     ORDER BY 
         hour_bucket DESC
-    LIMIT 48; -- Ultime 48 ore
+    LIMIT 48;
     """
-    
-    cursor.execute(query, (sensor_name,))
-    rows = cursor.fetchall()
+
+    if sensor_name == "light":
+        # La media di 0 e 1 (es. 0.5) * 100 = 50%
+        query = query_template.format(aggregation="AVG(measure) * 100")
+    elif sensor_name == "roll":
+        # La media di 0-100 (es. 70) = 70%
+        query = query_template.format(aggregation="AVG(measure)")
+    else:
+        # Fallback per altri sensori (es. pir_sensor)
+        query = query_template.format(aggregation="AVG(measure)")
+
+    try:
+        cursor.execute(query, (sensor_name,))
+        rows = cursor.fetchall()
+    except sqlite3.OperationalError as e:
+        print(f"Errore durante l'esecuzione della query (probabilmente tabella vuota): {e}")
+        rows = [] # Restituisci lista vuota se la tabella è vuota
+
     conn.close()
     
     # Format per Plotly
     data = {
         'x': [row['hour_bucket'] for row in reversed(rows)],
-        'y': [row['on_percentage'] for row in reversed(rows)]
+        'y': [row['value'] for row in reversed(rows)]
     }
     return data
