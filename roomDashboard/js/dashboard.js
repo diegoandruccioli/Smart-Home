@@ -11,6 +11,9 @@ const lightButton = document.getElementById("lightcheck");
 const lightbulbIcon = document.getElementById("icon");
 const range = document.getElementById('rollrange');
 const valueSpan = document.getElementById('rollvalue');
+
+const lightLabel = document.getElementById('light-label');
+
 lightswitch.disabled = true;
 range.disabled = true;
 
@@ -19,8 +22,12 @@ function updateDashboard(name, value) {
     lightswitch.checked = value > 0;
     if (lightswitch.checked) {
       lightbulbIcon.classList.replace("bi-lightbulb-off", "bi-lightbulb");
+      // --- AGGIUNGI QUESTA LINEA ---
+      if (lightLabel) lightLabel.textContent = "Acceso";
     } else {
       lightbulbIcon.classList.replace("bi-lightbulb", "bi-lightbulb-off");
+      // --- AGGIUNGI QUESTA LINEA ---
+      if (lightLabel) lightLabel.textContent = "Spento";
     }
   } else if (name == "roll") {
     valueSpan.textContent = `${value}`;
@@ -41,8 +48,12 @@ document.addEventListener('DOMContentLoaded', () => {
       sendMessage(createJson("light", lightswitch.checked ? 1 : 0));
       if (lightswitch.checked) {
         lightbulbIcon.classList.replace("bi-lightbulb-off", "bi-lightbulb");
+        // --- AGGIUNGI QUESTA LINEA ---
+        if (lightLabel) lightLabel.textContent = "Acceso";
       } else {
         lightbulbIcon.classList.replace("bi-lightbulb", "bi-lightbulb-off");
+        // --- AGGIUNGI QUESTA LINEA ---
+        if (lightLabel) lightLabel.textContent = "Spento";
       }
     });
     sendMessage(createJson("manual_light", lightButton.checked ? 1 : 0));

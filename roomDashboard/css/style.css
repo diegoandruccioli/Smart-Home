@@ -1,6 +1,11 @@
+/* Impostazioni globali e scrollbar */
+body {
+    background-color: var(--bs-body-bg);
+}
+
 ::-webkit-scrollbar {
     width: .5rem;
-    height: 0;
+    height: 0.5rem;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -12,25 +17,82 @@
     background: transparent;
 }
 
-h1 {
-    font-size: 1.5em; /* Reduce font size of h1 */
+/* --- Stili per il Toggle del Tema --- */
+
+/* Nasconde l'icona non attiva */
+.theme-icon-moon,
+[data-bs-theme="dark"] .theme-icon-sun {
+    display: none;
+}
+[data-bs-theme="dark"] .theme-icon-moon {
+    display: inline-block;
 }
 
-h2 {
-    font-size: 1.3em; /* Reduce font size of h2 */
+/* --- Stili Card Controllo Luci --- */
+.light-control-icon {
+    font-size: 6rem; /* Icona grande */
+    line-height: 1;
+    color: var(--bs-secondary-bg-subtle);
+    transition: all 0.3s ease;
 }
 
-h3 {
-    font-size: 1.15em; /* Reduce font size of h3 */
+/* L'icona "ON" (che il tuo JS imposta) */
+.light-control-icon .bi-lightbulb {
+    color: var(--bs-warning);
+    /* Effetto GLOBO acceso */
+    text-shadow: 0 0 15px var(--bs-warning), 0 0 25px var(--bs-warning);
 }
 
-h4, h5, h6 {
-    font-size: 1em; /* Reduce font size of h4, h5, h6 */
+/* --- Stili Card Tapparella (Slider) --- */
+.slider-container {
+    display: flex;
+    align-items: center;
+    padding-top: 20px; /* Spazio per il badge */
 }
 
-em {
-    font-size: 1rem;
+/* Stile per il badge (mosso da dashboard.js) */
+#rollvalue {
+    top: 0;
+    left: 0;
+    font-size: 0.9rem;
+    pointer-events: none; /* Non interferisce col mouse */
+    transition: transform 0.1s ease-out;
 }
 
+/* Stili moderni per il range slider */
+#rollrange {
+    --track-height: 8px;
+    --thumb-size: 20px;
+    height: var(--thumb-size); /* Altezza totale per centrare il pallino */
+}
 
-  
+#rollrange::-webkit-slider-runnable-track {
+    height: var(--track-height);
+    background: var(--bs-secondary-bg-subtle);
+    border-radius: var(--track-height);
+}
+#rollrange::-moz-range-track {
+    height: var(--track-height);
+    background: var(--bs-secondary-bg-subtle);
+    border-radius: var(--track-height);
+}
+
+#rollrange::-webkit-slider-thumb {
+    appearance: none;
+    -webkit-appearance: none;
+    height: var(--thumb-size);
+    width: var(--thumb-size);
+    background: var(--bs-primary);
+    border-radius: 50%;
+    margin-top: calc((var(--thumb-size) - var(--track-height)) / -2);
+    border: none;
+    cursor: pointer;
+}
+#rollrange::-moz-range-thumb {
+    height: var(--thumb-size);
+    width: var(--thumb-size);
+    background: var(--bs-primary);
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+}
