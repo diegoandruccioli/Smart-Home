@@ -51,8 +51,8 @@ MQTT_PORT = 8883
 
 # --- Credenziali MQTT ---
 # Devi inserire qui lo username e la password che usi anche sull'ESP32
-MQTT_USER = "" # <-- Metti lo stesso user che hai in main.cpp
-MQTT_PASS = "" # <-- Metti la stessa password
+MQTT_USER = "bothrei" # <-- Metti lo stesso user che hai in main.cpp
+MQTT_PASS = "Bothrei1" # <-- Metti la stessa password
 
 # --- Topic (Canali) MQTT ---
 

@@ -11,17 +11,26 @@ webSocket.onerror = function (error) {
 
 webSocket.onmessage = function receiveMessage(event) {
   const data = JSON.parse(event.data);
-  console.log(data);
+  // Rimuoviamo il log qui per pulire la console
+  // console.log(data); 
   const measure = data.measure;
   const name = data.name;
-  const namechart = name + "chart";
-  // La funzione updateChart deve gestire i dati di "light", "roll", "pir" e "ldr"
-  updateChart(namechart, chartData[name].data, chartData[name].layout, data.timestamp, data.measure);
+
+  // --- INIZIO MODIFICA ---
+  //
+  // const namechart = name + "chart";
+  //
+  // NON aggiornare il grafico qui. Ci pensa il polling dell'API.
+  // updateChart(namechart, chartData[name].data, chartData[name].layout, data.timestamp, data.measure);
+  //
+  // --- FINE MODIFICA ---
+
+  // Aggiorna SOLO i controlli (icona luce, slider)
   updateDashboard(name, measure);
 }
 
 function sendMessage(message) {
-  // Controlla se il socket è pronto prima di inviare
+// ... (Questa funzione rimane invariata)
   if (webSocket.readyState === WebSocket.OPEN) {
     webSocket.send(message);
     console.log('Messaggio inviato:', message);

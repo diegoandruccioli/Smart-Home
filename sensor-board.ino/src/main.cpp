@@ -22,8 +22,8 @@ const char* password = "";
 // --- Configurazione Broker MQTT (HiveMQ) ---
 const char* mqtt_server = "6a7c8e41ebb842f4811d5f9e75cdffc4.s1.eu.hivemq.cloud";
 const int mqtt_port = 8883; // Porta 8883 per SSL/TLS
-const char* mqtt_user = ""; // <-- METTI QUI IL TUO USERNAME HIVEMQ
-const char* mqtt_password = ""; // <-- METTI QUI LA TUA PASSWORD HIVEMQ
+const char* mqtt_user = "bothrei"; // <-- METTI QUI IL TUO USERNAME HIVEMQ
+const char* mqtt_password = "Bothrei1"; // <-- METTI QUI LA TUA PASSWORD HIVEMQ
 
 // --- Topic MQTT ---
 const char* topic_light = "esp/light";

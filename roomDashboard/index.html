@@ -4,109 +4,147 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
+    <!-- CSS: Caricati da CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     
+    <!-- CSS Custom (che dovrai SOSTITUIRE) -->
     <link rel="stylesheet" href="css/style.css">
     
+    <!-- JS (Librerie) -->
     <script src="https://cdn.plot.ly/plotly-2.24.2.js" charset="utf-8"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     <title>Smart Home Dashboard</title>
 </head>
 
-<body class="d-flex flex-column vh-100">
+<body>
     
-    <header class="navbar navbar-expand-lg sticky-top bg-body-tertiary shadow-sm">
-        <div class="container-fluid">
-            <a class="navbar-brand d-flex align-items-center gap-2" href="#">
-                <i class="bi bi-house-heart-fill text-primary"></i>
-                <strong>Smart Home Dashboard</strong>
-            </a>
+    <!-- Layout Principale (No Sidebar Sinistra) -->
+    <div class="main-container p-4">
+
+        <!-- 1. HEADER NUOVO -->
+        <header class="main-header d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h3 class="mb-0">Bentornati Ragazzi!</h3>
+                <p class="text-muted mb-0">Controllate la vostra stanza in tempo reale.</p>
+            </div>
             
-            <button class="btn border-0" type="button" id="theme-toggle-btn">
+            <!-- Toggle per il Tema (Dark/Light) -->
+            <button class="btn border-0 fs-4" type="button" id="theme-toggle-btn" title="Cambia Tema">
                 <i class="bi bi-sun-fill theme-icon-sun"></i>
                 <i class="bi bi-moon-stars-fill theme-icon-moon"></i>
             </button>
-        </div>
-    </header>
+        </header>
 
-    <main class="container-fluid flex-grow-1 py-4">
+        <!-- 2. LAYOUT A DUE COLONNE -->
         <div class="row g-4">
 
-            <div class="col-xl-4 col-lg-5">
+            <!-- Colonna Sinistra/Centrale: GRAFICI (Come richiesto) -->
+            <main class="col-lg-8">
+                <h5 class="mb-3">Cronologia Dati</h5>
                 <div class="d-flex flex-column gap-4">
-                    
-                    <div class="card shadow-sm">
-                        <div class="card-header d-flex justify-content-between align-items-center">
-                            <h5 class="mb-0"><i class="bi bi-lightbulb me-2"></i>Controllo Luci</h5>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="lightcheck">
-                                <label class="form-check-label" for="lightcheck">Manuale</label>
-                            </div>
-                        </div>
-                        <div class="card-body text-center">
-                            <div class="light-control-icon mb-3">
-                                <i class="bi bi-lightbulb-off" id="icon"></i>
-                            </div>
-                            <div class="form-check form-switch fs-4 d-inline-block">
-                                <input class="form-check-input" type="checkbox" role="switch" id="lightswitch">
-                                <label class="form-check-label" for="lightswitch" id="light-label">Spento</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card shadow-sm">
-                        <div class="card-header d-flex justify-content-between align-items-center">
-                            <h5 class="mb-0"><i class="bi bi-window-split me-2"></i>Controllo Tapparella</h5>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="rollcheck">
-                                <label class="form-check-label" for="rollcheck">Manuale</label>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="slider-container position-relative mt-3">
-                                <i class="bi bi-arrow-down fs-4"></i>
-                                <input type="range" class="form-range mx-3" min="0" max="100" step="10" value="0" id="rollrange">
-                                <i class="bi bi-arrow-up fs-4"></i>
-                                <span class="position-absolute badge rounded-pill bg-primary" id="rollvalue">0</span>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-            <div class="col-xl-8 col-lg-7">
-                <div class="d-flex flex-column gap-4">
-
-                    <div class="card shadow-sm">
-                        <div class="card-header">
-                            <h5 class="mb-0">Storico Attivazioni Luce</h5>
-                        </div>
+                    <!-- Card Grafico Luci -->
+                    <div class="card card-chart shadow-sm">
                         <div class="card-body" style="min-height: 250px;">
                             <div id="lightchart"></div>
                         </div>
                     </div>
 
-                    <div class="card shadow-sm">
-                        <div class="card-header">
-                            <h5 class="mb-0">Storico Posizione Tapparella</h5>
-                        </div>
+                    <!-- Card Grafico Tapparella -->
+                    <div class="card card-chart shadow-sm">
                         <div class="card-body" style="min-height: 250px;">
                             <div id="rollchart"></div>
                         </div>
                     </div>
+                </div>
+            </main>
+
+            <!-- Colonna Destra: CONTROLLI (Come richiesto) -->
+            <aside class="col-lg-4">
+                <div class="d-flex flex-column gap-4">
+                    
+                    <!-- Card Membri Progetto -->
+                    <div class="card card-members shadow-sm">
+                        <div class="card-header">
+                            <h5 class="mb-0">Membri del Progetto</h5>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-unstyled mb-0">
+                                <li class="member-item">
+                                    <div class="avatar" style="background-color: #4A90E2;">AD</div>
+                                    <div class="member-info">
+                                        <strong class="member-name">Andruccioli Diego</strong>
+                                        <span class="member-email">diego.andruccioli@studio.unibo.it</span>
+                                    </div>
+                                </li>
+                                <li class="member-item">
+                                    <div class="avatar" style="background-color: #E24A4A;">MR</div>
+                                    <div class="member-info">
+                                        <strong class="member-name">Mici Rei</strong>
+                                        <span class="member-email">rei.mici2@studio.unibo.it</span>
+                                    </div>
+                                </li>
+                                <li class="member-item">
+                                    <div class="avatar" style="background-color: #4AE286;">MG</div>
+                                    <div class="member-info">
+                                        <strong class="member-name">Morelli Giovanni</strong>
+                                        <span class="member-email">giovanni.morelli8@studio.unibo.it</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Card Controllo Luci -->
+                    <div class="card card-control card-light shadow-sm">
+                        <div class="card-header">
+                            <h5 class="mb-0">Controllo Luce</h5>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="lightcheck">
+                                <label class="form-check-label" for="lightcheck">Manuale</label>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="light-control-hero">
+                                <i class="bi bi-lightbulb-off" id="icon"></i>
+                            </div>
+                            <input type="checkbox" class="d-none" id="lightswitch">
+                            <span id="light-label" class="light-status-label">Spento</span>
+                        </div>
+                    </div>
+
+                    <!-- Card Controllo Tapparella -->
+                    <div class="card card-control card-roll shadow-sm">
+                        <div class="card-header">
+                            <h5 class="mb-0">Controllo Tapparella</h5>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" value="" id="rollcheck">
+                                <label class="form-check-label" for="rollcheck">Manuale</label>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <i class="bi bi-window-split roll-icon"></i>
+                            <div class="slider-container position-relative mt-3">
+                                <i class="bi bi-chevron-down"></i>
+                                <input type="range" class="form-range mx-3" min="0" max="100" step="10" value="0" id="rollrange">
+                                <i class="bi bi-chevron-up"></i>
+                                <span class="position-absolute badge" id="rollvalue">0</span>
+                            </div>
+                        </div>
+                    </div>
 
                 </div>
-            </div>
+            </aside>
         </div>
-    </main>
+    </div>
 
+    <!-- JS (Librerie) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     
+    <!-- JS (Applicazione) -->
     <script src="js/socket.js"></script>
-    <script src="js/theme.js"></script> <script src="js/dashboard.js"></script>
+    <script src="js/theme.js"></script>
+    <script src="js/dashboard.js"></script>
     <script src="js/charts.js"></script>
 </body>
 </html>
