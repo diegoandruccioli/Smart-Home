@@ -68,7 +68,7 @@ Questa tabella riepiloga le funzionalità principali del sistema e lo stato attu
 | **Tapparella: Logica Auto (PIR + Orario)** | Attuatore | MUST | 🟢 |
 | **Monitoraggio Movimento (PIR)** | Sensori / Dashboard | MUST | 🟢 |
 | **Monitoraggio Luminosità (LDR)** | Sensori / Dashboard | MUST | 🟢 |
-| **Persistenza Dati Storici (DB)** | Server Bridge | SHOULD | 🟠 |
+| **Persistenza Dati Storici (DB)** | Server Bridge | SHOULD | 🟢 |
 | **Server Bridge (MQTT $\leftrightarrow$ WS)** | Server Bridge | MUST | 🟢 |
 
 <aside>
