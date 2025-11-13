@@ -1,0 +1,11 @@
+[wokwi]
+# Percorso corretto per la tua scheda "featheresp32"
+firmware = ".pio/build/featheresp32/firmware.elf"
+# Abilita la connessione a Internet per HiveMQ
+gateway = "internet" 
+
+[wifi]
+# CREA la rete virtuale a cui il tuo C++ si connetterà
+ssid = "Wokwi-GUEST"
+password = ""
+bssid = "42:42:42:42:42:42" # Aggiunto per stabilità

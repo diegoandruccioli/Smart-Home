@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "author": "Smart Home Actuator Board",
+  "editor": "Wokwi",
+  "parts": [
+    { "type": "wokwi-esp32-devkit-v1", "id": "esp", "top": 0, "left": 0, "attrs": {} },
+    {
+      "type": "wokwi-servo",
+      "id": "servo",
+      "top": -50,
+      "left": 150,
+      "attrs": { "minAngle": 0, "maxAngle": 180 }
+    },
+    { "type": "wokwi-led", "id": "led", "top": 50, "left": 150, "attrs": { "color": "white" } }
+  ],
+  "connections": [
+    [ "esp:TX", "$serial:RX", "", [] ],
+    [ "esp:RX", "$serial:TX", "", [] ],
+    [ "esp:GND", "servo:GND", "black", [ "v0" ] ],
+    [ "esp:VIN", "servo:V+", "red", [ "v0" ] ],
+    [ "esp:GND", "led:C", "black", [ "v0" ] ],
+    [ "esp:D2", "servo:SIG", "orange", [ "v0" ] ],
+    [ "esp:D13", "led:A", "green", [ "v0" ] ]
+  ],
+  "dependencies": {}
+}
