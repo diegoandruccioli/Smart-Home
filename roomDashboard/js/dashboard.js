@@ -33,7 +33,7 @@ range.disabled = true;
 /**
  * Aggiorna l'interfaccia (i controlli) in base ai messaggi
  * ricevuti in tempo reale dal server (via WebSocket).
- * @param {string} name - Il nome del controllo (es. "light", "roll")
+ * @param {string} name - Il nome del controllo (es. "light", "roll", "pir_sensor")
  * @param {any} value - Il nuovo valore (es. 1, 0, 50)
  */
 function updateDashboard(name, value) {
@@ -66,6 +66,44 @@ function updateDashboard(name, value) {
     
     // Aggiorna la posizione del pallino dello slider
     range.value = value;
+  }
+  
+  // Aggiornamento Sensore PIR (Movimento)
+  else if (name == "pir_sensor") {
+    const statusElement = document.getElementById('pir-status');
+    if (!statusElement) return;
+
+    // 0 = Nessun movimento, 1 = Movimento rilevato
+    if (value > 0) {
+      statusElement.textContent = "MOVIMENTO RILEVATO";
+      // Cambia colore a rosso/allarme
+      statusElement.classList.replace("bg-primary-subtle", "bg-danger");
+      statusElement.classList.replace("text-primary-emphasis", "text-white");
+    } else {
+      statusElement.textContent = "Tutto Calmo";
+      // Torna al colore primario/neutro
+      statusElement.classList.replace("bg-danger", "bg-primary-subtle");
+      statusElement.classList.replace("text-white", "text-primary-emphasis");
+    }
+  }
+ 
+  // Aggiornamento Fotoresistenza (LDR - Luminosità)
+  else if (name == "photo_resistor") {
+    const statusElement = document.getElementById('ldr-status');
+    if (!statusElement) return;
+
+    // 0 = Luminoso, 1 = Buio
+    if (value > 0) {
+      statusElement.textContent = "BUIIO (Attiva Luce Automatica)";
+      // Cambia colore a scuro
+      statusElement.classList.replace("bg-warning-subtle", "bg-dark");
+      statusElement.classList.replace("text-warning-emphasis", "text-white");
+    } else {
+      statusElement.textContent = "LUMINOSO (Luce Spenta Automatica)";
+      // Torna al colore neutro/giallo
+      statusElement.classList.replace("bg-dark", "bg-warning-subtle");
+      statusElement.classList.replace("text-white", "text-warning-emphasis");
+    }
   }
 }
 

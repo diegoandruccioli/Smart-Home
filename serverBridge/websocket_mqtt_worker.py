@@ -154,9 +154,6 @@ def on_message(client, userdata, msg):
     # temporaneo per "lanciare" la funzione asincrona da un contesto sincrono.
     asyncio.run(send_to_all_websockets(payload))
 
-    # --- INIZIO CORREZIONE ---
-    # Il tuo codice originale aveva un blocco duplicato qui, l'ho rimosso.
-    # --- FINE CORREZIONE ---
 
 # --- Inizializzazione Client MQTT ---
 
