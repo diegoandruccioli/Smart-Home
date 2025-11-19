@@ -102,6 +102,9 @@ async def websocket_handler(websocket):
     except websockets.exceptions.ConnectionClosedOK:
         # L'utente ha chiuso la pagina web (normale amministrazione)
         pass
+    except websockets.exceptions.ConnectionClosedError:
+        # **CORREZIONE**: Cattura le chiusure anomale (come WinError 10053) e le gestisce.
+        pass
     finally:
         # Blocco 'finally': viene eseguito SEMPRE (sia se l'utente chiude, sia in caso di errore)
         # Rimuove l'utente dall'elenco globale

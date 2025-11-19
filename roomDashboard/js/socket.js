@@ -16,17 +16,14 @@ webSocket.onmessage = function receiveMessage(event) {
   const measure = data.measure;
   const name = data.name;
 
-  // --- INIZIO MODIFICA ---
-  //
-  // const namechart = name + "chart";
-  //
-  // NON aggiornare il grafico qui. Ci pensa il polling dell'API.
-  // updateChart(namechart, chartData[name].data, chartData[name].layout, data.timestamp, data.measure);
-  //
-  // --- FINE MODIFICA ---
-
   // Aggiorna SOLO i controlli (icona luce, slider)
   updateDashboard(name, measure);
+  
+  // **CORREZIONE**: Forza il ricaricamento dei grafici al ricevimento di un nuovo dato (LIVE)
+  // Il dato è ora salvato nel DB dal worker, quindi possiamo ricaricarlo.
+  if (typeof loadAndInitializeCharts === 'function') {
+      loadAndInitializeCharts();
+  }
 }
 
 function sendMessage(message) {
@@ -34,6 +31,11 @@ function sendMessage(message) {
   if (webSocket.readyState === WebSocket.OPEN) {
     webSocket.send(message);
     console.log('Messaggio inviato:', message);
+    // **CORREZIONE**: Forza il ricaricamento dei grafici all'invio di un comando (IMMEDIATE)
+    // Questo è il modo per vedere il proprio comando immediatamente sul grafico.
+    if (typeof loadAndInitializeCharts === 'function') {
+        loadAndInitializeCharts();
+    }
   } else {
     console.warn('WebSocket non connesso. Impossibile inviare il messaggio:', message);
   }

@@ -43,7 +43,7 @@ DB_TABLE = "SmartHome"
 # --- Configurazione MQTT (per HiveMQ) ---
 
 # L'indirizzo pubblico del tuo broker MQTT su HiveMQ
-MQTT_URL = "6a7c8e41ebb842f4811d5f9e75cdffc4.s1.eu.hivemq.cloud" 
+MQTT_URL = "52dddef9726d430db26ad9b27548f562.s1.eu.hivemq.cloud" 
 # La porta per la connessione sicura (SSL/TLS)
 MQTT_PORT = 8883
 
