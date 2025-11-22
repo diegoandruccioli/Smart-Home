@@ -85,8 +85,6 @@ Tutte le funzionalità previste sono state implementate, testate e integrate nel
 | **Visualizzazione Grafici (Plotly)** | Dashboard / API | SHOULD | 🟢 |
 | **Server Bridge (MQTT $\leftrightarrow$ WS)** | Server Bridge | MUST | 🟢 |
 
-<aside>
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Green_check.svg/600px-Green_check.svg.png" alt="check" width="20px" />
 Legenda:
 
 * **🟢 Completamente Implementato:** Funzione con codice sorgente completo, integrato e funzionante (inclusi DB e Grafici).
