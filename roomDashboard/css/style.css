@@ -1,0 +1,41 @@
+/* Stile Generale */
+body {
+    background-color: #f8f9fa !important; /* Grigio chiarissimo di sfondo */
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Contenitori bianchi */
+.control-box {
+    border: 1px solid #eee; /* Bordo sottilissimo */
+}
+
+/* Transizione dolce per il cambio colore icona */
+.icon-transition {
+    transition: color 0.3s ease-in-out;
+}
+
+/* --- LO STATO ACCESO --- */
+/* Quando il JS aggiunge questa classe, 
+   cambiamo SOLO il colore in un blu pulito.
+   NESSUN filtro "drop-shadow" o luminosità.
+*/
+.light-on {
+    color: #0d6efd !important; /* Blu Bootstrap standard */
+}
+/* ----------------------- */
+
+
+/* Personalizzazione Slider per tema chiaro */
+.clean-slider::-webkit-slider-thumb {
+    background: #0d6efd; /* Blu */
+}
+
+.clean-slider::-webkit-slider-runnable-track {
+    background: #e9ecef; /* Grigio chiaro */
+}
+
+/* Stato disabilitato per pulsanti e slider */
+.btn:disabled, .form-range:disabled {
+    opacity: 0.4;
+    cursor:not-allowed;
+}
