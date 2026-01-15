@@ -1,146 +1,127 @@
 /**
- * Questo file gestisce la logica dei CONTROLLI.
- * Ascolta i click sui pulsanti/slider (input dell'utente) e invia
- * i comandi al server tramite WebSocket.
- * * Gestisce anche l'aggiornamento VISIVO dei controlli (l'icona della luce,
- * la posizione dello slider) quando riceve dati live dal server.
+ * GESTIONE INTERFACCIA E COMANDI
  */
 
-// --- 1. Selezione degli Elementi DOM ---
-// Questi ID provengono da index.html
+// --- SELEZIONE ELEMENTI DOM ---
+const lightCheckManual = document.getElementById("lightcheck");
+const rollCheckManual = document.getElementById("rollcheck");
 
-// Controlli "Manuale"
-const lightButton = document.getElementById("lightcheck");
-const rollButton = document.getElementById("rollcheck");
+// Elementi Luce
+const btnToggleLight = document.getElementById("btn-toggle-light");
+const lightSwitchHidden = document.getElementById("lightswitch");
+const lightIcon = document.getElementById("light-icon");
+const lightLabel = document.getElementById("light-label");
 
-// Controllo Luce
-const lightswitch = document.getElementById("lightswitch"); // L'input checkbox nascosto
-const lightbulbIcon = document.getElementById("icon"); // L'icona <i> nel pulsante grande
-const lightLabel = document.getElementById('light-label'); // L'etichetta "Acceso/Spento"
-const lightHeroButton = document.querySelector('.light-control-hero'); // Il pulsante-icona cliccabile
+// Elementi Tapparella (MODIFICATO)
+const rollValueDisplay = document.getElementById("rollvalue");
+const rollButtons = document.querySelectorAll(".roll-btn"); // Seleziona tutti i pulsanti %
 
-// Controllo Tapparella
-const range = document.getElementById('rollrange');
-const valueSpan = document.getElementById('rollvalue');
-
-// Disabilita i controlli all'avvio (la modalità automatica è predefinita)
-lightswitch.disabled = true;
-range.disabled = true;
-
-
-// --- 2. Funzione di Aggiornamento (chiamata da socket.js) ---
-
-/**
- * Aggiorna l'interfaccia (i controlli) in base ai messaggi
- * ricevuti in tempo reale dal server (via WebSocket).
- * @param {string} name - Il nome del controllo (es. "light", "roll")
- * @param {any} value - Il nuovo valore (es. 1, 0, 50)
- */
-function updateDashboard(name, value) {
-  
-  // Aggiornamento LUCE
-  if (name == "light") {
-    const isChecked = value > 0;
-    lightswitch.checked = isChecked;
-    
-    if (isChecked) {
-      // Se acceso: usa l'icona 'bi-lightbulb' (piena) e aggiorna l'etichetta
-      lightbulbIcon.classList.replace("bi-lightbulb-off", "bi-lightbulb");
-      if (lightLabel) lightLabel.textContent = "Acceso";
-    } else {
-      // Se spento: usa l'icona 'bi-lightbulb-off' e aggiorna l'etichetta
-      lightbulbIcon.classList.replace("bi-lightbulb", "bi-lightbulb-off");
-      if (lightLabel) lightLabel.textContent = "Spento";
-    }
-  } 
-  
-  // Aggiornamento TAPPARELLA
-  else if (name == "roll") {
-    // Aggiorna il testo del badge
-    valueSpan.textContent = `${value}`;
-    
-    // Muove il badge lungo lo slider per seguire il pallino
-    // (Questa logica calcola la posizione percentuale)
-    const offset = ((value - range.min + 2) / (range.max - range.min + 4)) * range.offsetWidth;
-    valueSpan.style.transform = `translateX(${offset}px) translateY(-120%)`;
-    
-    // Aggiorna la posizione del pallino dello slider
-    range.value = value;
-  }
-}
-
-
-// --- 3. Funzione Helper per creare JSON ---
+// --- FUNZIONE HELPER JSON ---
 function createJson(obj, value) {
-  const json = {
-    name: obj,
-    measure: value,
-  }
+  const json = { name: obj, measure: value };
   return JSON.stringify(json);
 }
 
 
-// --- 4. Event Listener (al caricamento della pagina) ---
-document.addEventListener('DOMContentLoaded', () => {
-
-  // --- Evento per il Pulsante-Icona della LUCE ---
-  if (lightHeroButton) {
-      lightHeroButton.addEventListener('click', () => {
-          // Se lo switch è disabilitato (modalità automatica), non fa nulla
-          if (lightswitch.disabled) return;
-          
-          // Altrimenti, simula un "click" sullo switch checkbox nascosto
-          // Questo fa scattare l'evento 'lightswitch.addEventListener("click", ...)' qui sotto
-          lightswitch.click();
-      });
-  }
-
-  // --- Evento per lo switch "Manuale" della LUCE ---
-  lightButton.addEventListener("click", () => {
-    // Abilita/Disabilita lo switch principale
-    lightswitch.disabled = !lightButton.checked;
-    
-    // Invia lo stato (manuale/automatico) al server
-    sendMessage(createJson("manual_light", lightButton.checked ? 1 : 0));
-  });
-  
-  // --- Evento per lo switch (nascosto) della LUCE ---
-  lightswitch.addEventListener("click", () => {
-    const isChecked = lightswitch.checked;
-    // Invia il comando (acceso/spento) al server
-    sendMessage(createJson("light", isChecked ? 1 : 0));
-    
-    // Aggiorna la grafica (lo fa anche updateDashboard, ma questo è più reattivo)
-    if (isChecked) {
-      lightbulbIcon.classList.replace("bi-lightbulb-off", "bi-lightbulb");
-      if (lightLabel) lightLabel.textContent = "Acceso";
-    } else {
-      lightbulbIcon.classList.replace("bi-lightbulb", "bi-lightbulb-off");
-      if (lightLabel) lightLabel.textContent = "Spento";
-    }
-  });
-
-
-  // --- Evento per lo switch "Manuale" della TAPPARELLA ---
-  rollButton.addEventListener("click", () => {
-    // Abilita/Disabilita lo slider
-    range.disabled = !rollButton.checked;
-    
-    // Invia lo stato (manuale/automatico) al server
-    sendMessage(createJson("manual_roll", rollButton.checked ? 1 : 0));
-  });
-
-  // --- Evento per lo slider della TAPPARELLA ---
-  range.addEventListener('input', (event) => {
-    const value = event.target.value;
-    
-    // Invia il comando (posizione 0-100) al server
-    sendMessage(createJson("roll", value));
-    
-    // Aggiorna il testo e la posizione del badge
-    valueSpan.textContent = `${value}`;
-    const offset = ((value - range.min + 2) / (range.max - range.min + 4)) * range.offsetWidth;
-    valueSpan.style.transform = `translateX(${offset}px) translateY(-120%)`;
-  });
-  
+// --- 1. GESTIONE LUCE ---
+lightCheckManual.addEventListener("click", () => {
+    const isManual = lightCheckManual.checked;
+    btnToggleLight.disabled = !isManual;
+    sendMessage(createJson("manual_light", isManual ? 1 : 0));
 });
+
+btnToggleLight.addEventListener("click", () => {
+    lightSwitchHidden.checked = !lightSwitchHidden.checked;
+    handleLightChange();
+});
+
+function handleLightChange() {
+    const isOn = lightSwitchHidden.checked;
+    sendMessage(createJson("light", isOn ? 1 : 0));
+    updateLightUI(isOn);
+}
+
+function updateLightUI(isOn) {
+    lightSwitchHidden.checked = isOn;
+    if (isOn) {
+        lightIcon.classList.remove("bi-lightbulb-off-fill", "text-muted");
+        lightIcon.classList.add("bi-lightbulb-fill", "light-on");
+        lightLabel.textContent = "Acceso";
+        lightLabel.classList.remove("text-muted");
+        lightLabel.classList.add("text-primary");
+    } else {
+        lightIcon.classList.remove("bi-lightbulb-fill", "light-on");
+        lightIcon.classList.add("bi-lightbulb-off-fill", "text-muted");
+        lightLabel.textContent = "Spento";
+        lightLabel.classList.add("text-muted");
+        lightLabel.classList.remove("text-primary");
+    }
+}
+
+
+// --- 2. GESTIONE TAPPARELLA (MODIFICATA) ---
+
+// A. Cambio Modalità Manuale/Automatico
+rollCheckManual.addEventListener("click", () => {
+    const isManual = rollCheckManual.checked;
+    
+    // Abilita/Disabilita TUTTI i pulsanti della tapparella
+    rollButtons.forEach(btn => {
+        btn.disabled = !isManual;
+    });
+    
+    // Invia stato al server
+    sendMessage(createJson("manual_roll", isManual ? 1 : 0));
+});
+
+// B. Click sui pulsanti Preset (0%, 25%, ecc.)
+rollButtons.forEach(btn => {
+    btn.addEventListener("click", (e) => {
+        // Recupera il valore dall'attributo data-value (es. "50")
+        const val = e.target.getAttribute("data-value");
+        
+        // Aggiorna UI locale
+        updateRollUI(val);
+        
+        // Invia comando al server
+        sendMessage(createJson("roll", val));
+    });
+});
+
+// Funzione dedicata per aggiornare la grafica della tapparella
+function updateRollUI(value) {
+    // 1. Aggiorna il testo
+    rollValueDisplay.textContent = `${value}%`;
+    
+    // 2. Aggiorna lo stato "attivo" dei pulsanti
+    rollButtons.forEach(btn => {
+        // Rimuove la classe active da tutti
+        btn.classList.remove("active", "btn-primary", "text-white");
+        btn.classList.add("btn-outline-secondary");
+        
+        // Aggiunge la classe active solo se il valore corrisponde
+        if (btn.getAttribute("data-value") == value) {
+            btn.classList.remove("btn-outline-secondary");
+            btn.classList.add("active", "btn-primary", "text-white");
+        }
+    });
+}
+
+
+// --- 3. RICEZIONE DATI DAL SERVER ---
+function updateDashboard(name, value) {
+    
+    if (name == "light") {
+        const isOn = (value == 1 || value == "1" || value == true);
+        updateLightUI(isOn);
+    }
+    
+    else if (name == "roll") {
+        // Converte in intero per sicurezza
+        const intValue = parseInt(value);
+        
+        // Trova il pulsante più vicino o esatto (per gestire valori intermedi se arrivano dai sensori)
+        // Qui facciamo un aggiornamento diretto
+        updateRollUI(intValue);
+    }
+}
