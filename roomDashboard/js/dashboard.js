@@ -9,138 +9,135 @@
 // --- 1. Selezione degli Elementi DOM ---
 // Questi ID provengono da index.html
 
-// Controlli "Manuale"
-const lightButton = document.getElementById("lightcheck");
-const rollButton = document.getElementById("rollcheck");
+// --- 2. GESTIONE CONDIZIONATORE (Nuovo) ---
+const acCheckManual = document.getElementById("accheck");
+const btnToggleAc = document.getElementById("btn-toggle-ac");
+const acSwitchHidden = document.getElementById("acswitch");
+const acIcon = document.getElementById("ac-icon");
+const acLabel = document.getElementById("ac-label");
 
-// Controllo Luce
-const lightswitch = document.getElementById("lightswitch"); // L'input checkbox nascosto
-const lightbulbIcon = document.getElementById("icon"); // L'icona <i> nel pulsante grande
-const lightLabel = document.getElementById('light-label'); // L'etichetta "Acceso/Spento"
-const lightHeroButton = document.querySelector('.light-control-hero'); // Il pulsante-icona cliccabile
+// --- Funzione di Aggiornamento UI AC ---
+function updateAcUI(isOn) {
+  acSwitchHidden.checked = isOn;
+  if (isOn) {
+    acIcon.classList.remove("text-muted");
+    acIcon.classList.add("text-primary", "ac-on");
+    acLabel.textContent = "Acceso";
+    acLabel.classList.remove("text-muted");
+    acLabel.classList.add("text-primary");
+  } else {
+    acIcon.classList.remove("text-primary", "ac-on");
+    acIcon.classList.add("text-muted");
+    acLabel.textContent = "Spento";
+    acLabel.classList.add("text-muted");
+    acLabel.classList.remove("text-primary");
+  }
+}
 
-// Controllo Tapparella
-const range = document.getElementById('rollrange');
-const valueSpan = document.getElementById('rollvalue');
-
-// Disabilita i controlli all'avvio (la modalità automatica è predefinita)
-lightswitch.disabled = true;
-range.disabled = true;
-
-
-// --- 2. Funzione di Aggiornamento (chiamata da socket.js) ---
-
-/**
- * Aggiorna l'interfaccia (i controlli) in base ai messaggi
- * ricevuti in tempo reale dal server (via WebSocket).
- * @param {string} name - Il nome del controllo (es. "light", "roll")
- * @param {any} value - Il nuovo valore (es. 1, 0, 50)
- */
+// --- Funzione Principale Update (chiamata dal socket) ---
 function updateDashboard(name, value) {
-  
-  // Aggiornamento LUCE
   if (name == "light") {
     const isChecked = value > 0;
     lightswitch.checked = isChecked;
-    
     if (isChecked) {
-      // Se acceso: usa l'icona 'bi-lightbulb' (piena) e aggiorna l'etichetta
       lightbulbIcon.classList.replace("bi-lightbulb-off", "bi-lightbulb");
       if (lightLabel) lightLabel.textContent = "Acceso";
     } else {
-      // Se spento: usa l'icona 'bi-lightbulb-off' e aggiorna l'etichetta
       lightbulbIcon.classList.replace("bi-lightbulb", "bi-lightbulb-off");
       if (lightLabel) lightLabel.textContent = "Spento";
     }
-  } 
-  
-  // Aggiornamento TAPPARELLA
-  else if (name == "roll") {
-    // Aggiorna il testo del badge
-    valueSpan.textContent = `${value}`;
-    
-    // Muove il badge lungo lo slider per seguire il pallino
-    // (Questa logica calcola la posizione percentuale)
-    const offset = ((value - range.min + 2) / (range.max - range.min + 4)) * range.offsetWidth;
-    valueSpan.style.transform = `translateX(${offset}px) translateY(-120%)`;
-    
-    // Aggiorna la posizione del pallino dello slider
-    range.value = value;
+  } else if (name == "ac") {
+    const isOn = value == 1 || value == "1" || value == true;
+    updateAcUI(isOn);
   }
 }
 
-
-// --- 3. Funzione Helper per creare JSON ---
+// --- Funzione Helper per creare JSON ---
 function createJson(obj, value) {
-  const json = {
-    name: obj,
-    measure: value,
-  }
+  const json = { name: obj, measure: value };
   return JSON.stringify(json);
 }
 
+// --- Event Listener ---
+// --- Event Listener ---
+document.addEventListener("DOMContentLoaded", () => {
+  // --- LUCE ---
+  const lightCheckManual = document.getElementById("lightcheck");
+  const btnToggleLight = document.getElementById("btn-toggle-light");
+  const lightSwitchHidden = document.getElementById("lightswitch");
+  const lightHeroButton = document.querySelector(".light-control-hero");
+  const lightbulbIcon = document.getElementById("icon");
+  const lightLabel = document.getElementById("light-label");
 
-// --- 4. Event Listener (al caricamento della pagina) ---
-document.addEventListener('DOMContentLoaded', () => {
+  // 1. Switch Manuale Luce
+  if (lightCheckManual) {
+    lightCheckManual.addEventListener("click", () => {
+      const isManual = lightCheckManual.checked;
 
-  // --- Evento per il Pulsante-Icona della LUCE ---
-  if (lightHeroButton) {
-      lightHeroButton.addEventListener('click', () => {
-          // Se lo switch è disabilitato (modalità automatica), non fa nulla
-          if (lightswitch.disabled) return;
-          
-          // Altrimenti, simula un "click" sullo switch checkbox nascosto
-          // Questo fa scattare l'evento 'lightswitch.addEventListener("click", ...)' qui sotto
-          lightswitch.click();
-      });
+      // Abilita/Disabilita controlli
+      lightSwitchHidden.disabled = !isManual;
+      if (btnToggleLight) btnToggleLight.disabled = !isManual;
+
+      // Invia comando al server
+      sendMessage(createJson("manual_light", isManual ? 1 : 0));
+    });
   }
 
-  // --- Evento per lo switch "Manuale" della LUCE ---
-  lightButton.addEventListener("click", () => {
-    // Abilita/Disabilita lo switch principale
-    lightswitch.disabled = !lightButton.checked;
-    
-    // Invia lo stato (manuale/automatico) al server
-    sendMessage(createJson("manual_light", lightButton.checked ? 1 : 0));
-  });
-  
-  // --- Evento per lo switch (nascosto) della LUCE ---
-  lightswitch.addEventListener("click", () => {
-    const isChecked = lightswitch.checked;
-    // Invia il comando (acceso/spento) al server
-    sendMessage(createJson("light", isChecked ? 1 : 0));
-    
-    // Aggiorna la grafica (lo fa anche updateDashboard, ma questo è più reattivo)
-    if (isChecked) {
-      lightbulbIcon.classList.replace("bi-lightbulb-off", "bi-lightbulb");
-      if (lightLabel) lightLabel.textContent = "Acceso";
-    } else {
-      lightbulbIcon.classList.replace("bi-lightbulb", "bi-lightbulb-off");
-      if (lightLabel) lightLabel.textContent = "Spento";
-    }
-  });
+  // 2. Click Icona Grande (Hero) Luce
+  if (lightHeroButton) {
+    lightHeroButton.addEventListener("click", () => {
+      if (lightSwitchHidden.disabled) return;
+      lightSwitchHidden.click();
+    });
+  }
 
+  // 3. Click Pulsante "Cambia Stato" Luce
+  if (btnToggleLight) {
+    btnToggleLight.addEventListener("click", () => {
+      if (lightSwitchHidden.disabled) return; // Doppio controllo
+      lightSwitchHidden.click();
+    });
+  }
 
-  // --- Evento per lo switch "Manuale" della TAPPARELLA ---
-  rollButton.addEventListener("click", () => {
-    // Abilita/Disabilita lo slider
-    range.disabled = !rollButton.checked;
-    
-    // Invia lo stato (manuale/automatico) al server
-    sendMessage(createJson("manual_roll", rollButton.checked ? 1 : 0));
-  });
+  // 4. Change effettivo (Checkbox Nascosto) Luce
+  if (lightSwitchHidden) {
+    lightSwitchHidden.addEventListener("click", () => {
+      const isChecked = lightSwitchHidden.checked;
+      sendMessage(createJson("light", isChecked ? 1 : 0));
 
-  // --- Evento per lo slider della TAPPARELLA ---
-  range.addEventListener('input', (event) => {
-    const value = event.target.value;
-    
-    // Invia il comando (posizione 0-100) al server
-    sendMessage(createJson("roll", value));
-    
-    // Aggiorna il testo e la posizione del badge
-    valueSpan.textContent = `${value}`;
-    const offset = ((value - range.min + 2) / (range.max - range.min + 4)) * range.offsetWidth;
-    valueSpan.style.transform = `translateX(${offset}px) translateY(-120%)`;
-  });
-  
+      // Aggiorna UI locale
+      if (isChecked) {
+        lightbulbIcon.classList.replace("bi-lightbulb-off", "bi-lightbulb");
+        if (lightLabel) lightLabel.textContent = "Acceso";
+      } else {
+        lightbulbIcon.classList.replace("bi-lightbulb", "bi-lightbulb-off");
+        if (lightLabel) lightLabel.textContent = "Spento";
+      }
+    });
+  }
+
+  // --- CONDIZIONATORE ---
+
+  // 1. Switch Manuale AC
+  if (acCheckManual) {
+    acCheckManual.addEventListener("click", () => {
+      const isManual = acCheckManual.checked;
+      btnToggleAc.disabled = !isManual; // Abilita/Disabilita pulsante
+      sendMessage(createJson("manual_ac", isManual ? 1 : 0));
+    });
+  }
+
+  // 2. Pulsante Toggle AC
+  if (btnToggleAc) {
+    btnToggleAc.addEventListener("click", () => {
+      acSwitchHidden.checked = !acSwitchHidden.checked;
+      handleAcChange();
+    });
+  }
+
+  function handleAcChange() {
+    const isOn = acSwitchHidden.checked;
+    sendMessage(createJson("ac", isOn ? 1 : 0));
+    updateAcUI(isOn);
+  }
 });

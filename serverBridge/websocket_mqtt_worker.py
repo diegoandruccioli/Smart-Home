@@ -89,11 +89,11 @@ async def websocket_handler(websocket):
                     mqtt_client.publish(MQTT_TOPIC_COMMAND_LIGHT, message)
                     print(f"Published to {MQTT_TOPIC_COMMAND_LIGHT}: {message}")
                     
-                # Se è un comando per la tapparella...
-                elif name in ["roll", "manual_roll"]:
-                    # ...pubblica il messaggio sul topic dei comandi tapparella
-                    mqtt_client.publish(MQTT_TOPIC_COMMAND_ROLL, message)
-                    print(f"Published to {MQTT_TOPIC_COMMAND_ROLL}: {message}")
+                # Se è un comando per il condizionatore...
+                elif name in ["ac", "manual_ac"]:
+                    # ...pubblica il messaggio sul topic dei comandi AC
+                    mqtt_client.publish(MQTT_TOPIC_COMMAND_TEMP, message)
+                    print(f"Published to {MQTT_TOPIC_COMMAND_TEMP}: {message}")
                 
             except json.JSONDecodeError:
                 # Se il messaggio ricevuto dal web non è un JSON valido

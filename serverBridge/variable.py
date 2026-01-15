@@ -51,25 +51,25 @@ MQTT_PORT = 8883
 
 # --- Credenziali MQTT ---
 # Devi inserire qui lo username e la password che usi anche sull'ESP32
-MQTT_USER = "bothrei" # <-- Metti lo stesso user che hai in main.cpp
-MQTT_PASS = "Bothrei1" # <-- Metti la stessa password
+MQTT_USER = "botrei" 
+MQTT_PASS = "botrei1"
 
 # --- Topic (Canali) MQTT ---
 
 # Lista dei topic su cui il worker Python si mette in *ascolto*
 # (Dati inviati dalla scheda sensori)
-MQTT_TOPIC_SENSORS = ["esp/light", "esp/motion"]
+MQTT_TOPIC_SENSORS = [
+    "esp/motion",
+    "esp/temperature"
+]
 
 # Topic su cui il worker Python *scrive* (pubblica)
 # (Comandi inviati dalla dashboard)
 MQTT_TOPIC_COMMAND_LIGHT = "cmd/light"
-MQTT_TOPIC_COMMAND_ROLL = "cmd/roll"
-
-# --- Configurazione WebSocket (per la Dashboard) ---
+MQTT_TOPIC_COMMAND_TEMP = "cmd/temperature"
 
 # Indirizzo IP su cui il server WebSocket deve ascoltare
 # '0.0.0.0' è un indirizzo speciale che significa "ascolta su tutte le interfacce"
 # (sia localhost, sia l'IP di rete locale)
 WEBSOCKET_HOST = "0.0.0.0"
-# La porta dedicata al server WebSocket (deve essere DIVERSA da quella di Flask)
 WEBSOCKET_PORT = 8080
