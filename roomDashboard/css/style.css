@@ -1,185 +1,41 @@
-/* --- Variabili Colori (Ispirato dall'immagine) --- */
-:root {
-    --primary-color: #7B61FF;
-    --primary-color-light: #f4f2ff;
-    --bg-color: #F8F8FB; /* Sfondo principale */
-    --card-color: #FFFFFF;
-    --text-color: #1a1a1a;
-    --text-muted: #8a8a8a;
-    --shadow-light: rgba(123, 97, 255, 0.1);
-    --shadow-dark: rgba(0, 0, 0, 0.05);
-}
-
-[data-bs-theme="dark"] {
-    --primary-color: #937eff;
-    --primary-color-light: #2a244d;
-    --bg-color: #121212;
-    --card-color: #1e1e1e;
-    --text-color: #e0e0e0;
-    --text-muted: #888;
-    --shadow-light: rgba(147, 126, 255, 0.1);
-    --shadow-dark: rgba(0, 0, 0, 0.2);
-}
-
-/* --- Layout Principale --- */
+/* Stile Generale */
 body {
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    transition: background-color 0.3s ease, color 0.3s ease;
-    min-height: 100vh;
+    background-color: #f8f9fa !important; /* Grigio chiarissimo di sfondo */
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
-/* Scrollbar */
-::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-thumb { background-color: rgba(122, 122, 122, 0.4); border-radius: 3px; }
-::-webkit-scrollbar-track { background: transparent; }
-
-/* --- Tema Toggle (Nell'header) --- */
-.theme-icon-moon,
-[data-bs-theme="dark"] .theme-icon-sun {
-    display: none;
-}
-[data-bs-theme="dark"] .theme-icon-moon {
-    display: inline-block;
+/* Contenitori bianchi */
+.control-box {
+    border: 1px solid #eee; /* Bordo sottilissimo */
 }
 
-/* --- Stili Generali Card --- */
-.card {
-    border: none;
-    border-radius: 20px;
-    background-color: var(--card-color);
-    transition: all 0.3s ease;
-}
-.card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: transparent;
-    border-bottom: none;
-    padding: 1.5rem 1.5rem 0;
-}
-.card-body {
-    padding: 1.5rem;
-}
-.card-control {
-    min-height: 300px;
-    display: flex;
-    flex-direction: column;
-}
-.card-control .card-body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    flex-grow: 1;
+/* Transizione dolce per il cambio colore icona */
+.icon-transition {
+    transition: color 0.3s ease-in-out;
 }
 
-/* Stile Pulsante Luce (Stile Neumorfico) */
-.light-control-hero {
-    font-size: 6rem;
-    width: 180px;
-    height: 180px;
-    border-radius: 50%;
-    display: grid;
-    place-items: center;
-    cursor: pointer;
-    margin-bottom: 1.5rem;
-    color: var(--text-muted);
-    background-color: var(--bg-color);
-    box-shadow: 6px 6px 12px var(--shadow-dark), -6px -6px 12px var(--card-color);
-    transition: all 0.2s ease;
+/* --- LO STATO ACCESO --- */
+/* Quando il JS aggiunge questa classe, 
+   cambiamo SOLO il colore in un blu pulito.
+   NESSUN filtro "drop-shadow" o luminosità.
+*/
+.light-on {
+    color: #0d6efd !important; /* Blu Bootstrap standard */
 }
-.light-control-hero:active {
-    box-shadow: inset 6px 6px 12px var(--shadow-dark), inset -6px -6px 12px var(--card-color);
-}
-.light-control-hero .bi-lightbulb {
-    color: #FFC107; /* Giallo */
-    filter: drop-shadow(0 0 10px #FFC107);
+/* ----------------------- */
+
+
+/* Personalizzazione Slider per tema chiaro */
+.clean-slider::-webkit-slider-thumb {
+    background: #0d6efd; /* Blu */
 }
 
-.light-status-label {
-    color: var(--text-muted);
-    font-weight: 500;
+.clean-slider::-webkit-slider-runnable-track {
+    background: #e9ecef; /* Grigio chiaro */
 }
 
-/* Stile Tapparella */
-.card-roll .roll-icon {
-    font-size: 6rem;
-    color: var(--primary-color-light);
-}
-.slider-container {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    padding-top: 20px;
-}
-#rollvalue {
-    top: 0;
-    left: 0;
-    font-size: 0.9rem;
-    pointer-events: none;
-    transition: transform 0.1s ease-out;
-    background-color: var(--primary-color);
-}
-#rollrange {
-    --track-height: 8px;
-    --thumb-size: 20px;
-}
-#rollrange::-webkit-slider-runnable-track {
-    height: var(--track-height);
-    background: var(--bg-color);
-    border-radius: var(--track-height);
-}
-#rollrange::-moz-range-track {
-    height: var(--track-height);
-    background: var(--bg-color);
-    border-radius: var(--track-height);
-}
-#rollrange::-webkit-slider-thumb {
-    appearance: none; -webkit-appearance: none;
-    height: var(--thumb-size); width: var(--thumb-size);
-    background: var(--primary-color);
-    border-radius: 50%;
-    margin-top: calc((var(--thumb-size) - var(--track-height)) / -2);
-    border: none; cursor: pointer;
-}
-#rollrange::-moz-range-thumb {
-    height: var(--thumb-size); width: var(--thumb-size);
-    background: var(--primary-color);
-    border-radius: 50%;
-    border: none; cursor: pointer;
-}
-
-/* --- Sidebar Destra --- */
-.card-members .member-item {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    margin-bottom: 1rem;
-}
-.card-members .member-item:last-child {
-    margin-bottom: 0;
-}
-.card-members .avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: grid;
-    place-items: center;
-    font-weight: 600;
-    color: #fff;
-    font-size: 0.9rem;
-}
-.card-members .member-info {
-    display: flex;
-    flex-direction: column;
-    line-height: 1.2;
-}
-.card-members .member-name {
-    font-weight: 600;
-    color: var(--text-color);
-}
-.card-members .member-email {
-    font-size: 0.8rem;
-    color: var(--text-muted);
+/* Stato disabilitato per pulsanti e slider */
+.btn:disabled, .form-range:disabled {
+    opacity: 0.4;
+    cursor:not-allowed;
 }
