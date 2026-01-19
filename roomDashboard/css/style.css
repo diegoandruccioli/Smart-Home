@@ -6,7 +6,32 @@ body {
 
 /* Contenitori bianchi */
 .control-box {
-    border: 1px solid #eee; /* Bordo sottilissimo */
+    background-color: white;
+    border: 1px solid #eee;
+    /* Flexbox verticale per impilare titolo, dati e grafico */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* Taglia tutto ciò che osa uscire */
+}
+
+/* Il contenitore che definisce lo spazio per il grafico */
+.chart-container {
+    position: relative; /* Punto di ancoraggio */
+    width: 100%;
+    flex-grow: 1;       /* Occupa tutto lo spazio verticale rimanente */
+    min-height: 250px;  /* Altezza minima garantita */
+    margin-top: auto;   /* Spinge verso il basso se c'è spazio */
+}
+
+/* FORZATURA PLOTLY: Lo stacchiamo dal flusso */
+.js-plotly-plot {
+    position: absolute !important; /* Si sovrappone al chart-container */
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100% !important;
+    height: 100% !important;
 }
 
 /* Transizione dolce per il cambio colore icona */
