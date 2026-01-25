@@ -105,7 +105,7 @@ Per eseguire il progetto completo, seguire questi passaggi in ordine.
 
 ### Prerequisiti
 *   Python 3.x installato.
-*   Connessione Internet (per il broker MQTT HiveMQ Cloud).
+*   Connessione Internet (per il broker MQTT HiveMQ Cloud) preferibilmente senza firewall.
 
 ### Step 1: Configurazione Server Bridge e Dashboard
 1.  Aprire un terminale nella cartella `serverBridge`.
@@ -124,6 +124,9 @@ Per eseguire il progetto completo, seguire questi passaggi in ordine.
 Caricare i firmware sulle rispettive schede ESP32 (o simulatori Wokwi):
 1.  **Room Sensor Board**: Caricare `sensor-board (1)/sketch.ino`.
 2.  **Room Actuator Board**: Caricare `roomActuatorBoard 2/sketch.ino`.
+3.  **Le versioni Wokwi simulate del sensore e attuatore sono disponibili ai seguenti link**:
+- SENSORE: https://wokwi.com/projects/447411725151306753
+- ATTUATORE: https://wokwi.com/projects/447413070768226305
 
 Una volta verificate le connessioni al WiFi e al Broker MQTT (visibili da Monitor Seriale), il sistema è operativo.
 
