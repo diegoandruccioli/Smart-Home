@@ -1,6 +1,0 @@
-SENSOR_BOARD -WORKING-
-https://wokwi.com/projects/447411725151306753
-
-
-ACTUATOR_BOARD -WORKING-
-https://wokwi.com/projects/447413070768226305
