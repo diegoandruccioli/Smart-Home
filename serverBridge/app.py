@@ -3,13 +3,13 @@
 # contemporaneamente lancia un processo worker separato websocket mqtt worker py
 # per gestire le connessioni in tempo reale websocket e mqtt
 
-# importa multiprocessing per permettere lavvio di processi separati fondamentale per il worker
+# importa multiprocessing per permettere avvio di processi separati (per il worker)
 import multiprocessing
 # importa flask il framework server web e le utility per rispondere in json e inviare file
 from flask import Flask, jsonify, send_from_directory
-# importa il tuo gestore del database per le api dei grafici
+# importa il gestore del database per le api dei grafici
 import database_manager as db 
-# importa os per gestire i percorsi dei file file paths
+# importa os per gestire i percorsi dei file paths
 import os
 
 def start_worker():
@@ -40,8 +40,8 @@ dashboard_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'r
 
 # api endpoints per i dati dei grafici
 
-# definisce una route api lurl sarà api get chart data qualsiasicosa
-# sensor name è una variabile dinamica presa dallurl
+# definisce una route api, l'url sarà /api/get_chart_data/...
+# sensor name è una variabile dinamica presa dall'url
 @app.route('/api/get_chart_data/<sensor_name>')
 def get_chart_data(sensor_name):
     """
@@ -49,7 +49,7 @@ def get_chart_data(sensor_name):
     viene chiamato da charts js al caricamento della pagina
     """
     try:
-        # controlla quale sensore è stato richiesto nellurl
+        # controlla quale sensore è stato richiesto nell'url
         if sensor_name == "light":
             # chiama la funzione nel database manager per ottenere i dati aggregati della luce
             data = db.get_aggregated_chart_data("light")
@@ -70,9 +70,9 @@ def get_chart_data(sensor_name):
         return jsonify({"error": str(e)}), 500
 
 
-# gestione dei file statici htmlcssjs
+# gestione dei file statici html,css,js
 
-# definisce la route principale root dellapplicazione
+# definisce la route principale root dell'applicazione
 @app.route('/')
 def serve_index():
     """serve il file index html della dashboard"""
@@ -80,11 +80,10 @@ def serve_index():
     return send_from_directory(dashboard_dir, 'index.html')
 
 # definisce una route jolly che cattura qualsiasi altro percorso
-# es cssstyle css js socket js
 @app.route('/<path:path>')
 def serve_static_files(path):
     """serve gli asset statici js css ecc"""
-    # path contiene cssestyle css o js socket js
+    # path contiene css, style.css o js, socket.js
     # dice a flask di inviare quel file specifico dalla dashboard dir
     return send_from_directory(dashboard_dir, path)
 
@@ -94,26 +93,25 @@ def serve_static_files(path):
 # questo codice viene eseguito solo se avvii lo script con python app py
 if __name__ == '__main__':
     
-    # questo check è fondamentale quando usi debug true e multiprocessing
-    # la modalità debug avvia due processi il reloader che monitora i file
-    # e il worker che esegue lapp
+    # questo check è fondamentale quando si usa debug true e multiprocessing
+    # la modalità debug avvia due processi: il reloader che monitora i file
+    # e il worker che esegue l'app
     # questa variabile d ambiente è true solo nel processo worker
     # impedendo al reloader di avviare un secondo worker per errore
     if os.environ.get("WERKZEUG_RUN_MAIN") == "true":
         
         # prepara il processo del worker
-        # target start worker dice al processo quale funzione eseguire
+        # target=start_worker dice al processo quale funzione eseguire
         # daemon true assicura che il processo worker venga chiuso automaticamente
-        #                quando termini lapp flask principale ctrl c
         worker_process = multiprocessing.Process(target=start_worker, daemon=True)
         
-        # avvia il processo worker ora start worker è in esecuzione
+        # avvia il processo worker ora start_worker è in esecuzione
         worker_process.start()
         
         # logga il pid process id del worker per il debug
         print(f"Processo worker (MQTT/WS) avviato con PID: {worker_process.pid}")
 
-    # avvia lapplicazione flask principale
+    # avvia l'applicazione flask principale
     print(f"Server Flask (Dashboard e API) avviato su http localhost")
     
     
