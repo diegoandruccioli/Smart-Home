@@ -1,0 +1,33 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Ambienti virtuali (se ne userai in futuro)
+venv/
+.venv/
+env/
+
+# --- Database ---
+*.db
+*.sqlite3
+smart_home.db
+
+# --- Log e Debug ---
+*.log
+
+# --- Sistema Operativo ---
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# File temporanei Windows
+Thumbs.db
+Desktop.ini
+
+# --- IDE / Editor ---
+.vscode/
+.idea/
+
+# --- Arduino / Hardware ---
+build/
